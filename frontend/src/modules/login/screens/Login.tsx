@@ -4,10 +4,13 @@ import Input from "../../../shared/components/input/Input";
 import Button from "../../../shared/components/button/Button";
 import { theme } from "../../../shared/themes/theme";
 import { Icon } from "../../../shared/components/icon/Icon";
+import axios from "axios";
 
 const Login = () => {
-  const handleOnPress = () => {
+  const handleOnPress = async () => {
     console.log('clicou');
+    // const returnID = await axios.get('http://192.168.0.15:8080/correios/59020660');
+    // console.log(returnID.data);
   };
   return (
     <View>
@@ -16,8 +19,6 @@ const Login = () => {
           source={require('../../../assets/images/logo.png')} 
           resizeMode="center"
         />
-        {/* <Icon name="home3" size={44} color="blue"/> */}
-        {/* <Icon name="home3" /> */}
         <Input
           margin="0px 0px 16px 0px" 
           title="email:"
