@@ -27,15 +27,15 @@ const Input = ({margin, secureTextEntry, title, errorMessage, ...props}: InputPr
 
   return (
     <DisplayFlexColumn customMargin={margin} >
-      { title && 
-        (<Text
-          margin="0px 0px 4px 8px"
-          type={textTypes.PARAGRAPH_SMALL_SEMI_BOLD} 
-          color={theme.colors.grayTheme.gray100}
-        >
+        {title && (
+          <Text
+            margin="0px 0px 4px 8px"
+            color={theme.colors.grayTheme.gray100}
+            type={textTypes.PARAGRAPH_SMALL_SEMI_BOLD}
+          >
             {title}
-        </Text>) 
-      }
+          </Text>
+        )}
         <View>
           <ContainerInput
             hasSecureTextEntry={secureTextEntry}
@@ -43,22 +43,24 @@ const Input = ({margin, secureTextEntry, title, errorMessage, ...props}: InputPr
             isError={!!errorMessage}
             {...props}
           />
-          {secureTextEntry &&
+          {secureTextEntry && (
             <IconEye
-              size={24}
-              name={currentSecure ? "eye" : "eye-blocked"}
               onPress={handleOnPressEye}
+              name={currentSecure ? 'eye' : 'eye-blocked'}
+              size={20}
             />
-          }
+          )}
+
         </View>
-      { errorMessage &&
-        <Text
-          margin="0px 0px 0px 8px"
-          type={textTypes.PARAGRAPH_SMALL_SEMI_BOLD}
-          color={theme.colors.orangeTheme.orange80}>
-          {errorMessage}
-        </Text>
-      }
+        {errorMessage && (
+          <Text
+            margin="0px 0px 0px 8px"
+            type={textTypes.PARAGRAPH_SMALL_SEMI_BOLD}
+            color={theme.colors.orangeTheme.orange80}
+          >
+            {errorMessage}
+          </Text>
+        )}
     </DisplayFlexColumn>);
 };
 
