@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { NativeSyntheticEvent, TextInputChangeEventData } from 'react-native';
+import { connectionAPIPost } from '../../../shared/functions/connection/connectionAPI';
 
 
 export const useLogin = () => {
@@ -14,7 +15,8 @@ export const useLogin = () => {
     console.log('clicou');
     // const returnID = await axios.get('http://192.168.0.15:8080/correios/59020660');
     setLoading(true);
-    const resultAxios = await axios.post('http://192.168.0.15:8080/auth', {
+    // const resultAxios = await axios.post('http://192.168.0.15:8080/auth', {
+    await connectionAPIPost('http://192.168.0.15:8080/auth', {
       email,
       password,
     }).catch(() => {
@@ -22,7 +24,6 @@ export const useLogin = () => {
       setErrorMessage('Email ou senha inválidos');
     });
     setLoading(false);
-    console.log(resultAxios);  
   };
 
   const handleOnChangeEmail = (event:NativeSyntheticEvent<TextInputChangeEventData>) => {

@@ -35,6 +35,24 @@ export default class ConnectionAPI {
       throw new Error('ERROR_CONNECTION');
     });
   }
-
-
 }
+
+export const connectionAPIGet = async <T>(url: string): Promise<T> => {
+  return ConnectionAPI.connect(url, MethodEnum.GET);
+};
+
+export const connectionAPIDelete = async <T>(url: string): Promise<T> => {
+  return ConnectionAPI.connect(url, MethodEnum.DELETE);
+};
+
+export const connectionAPIPost = async <T, B = unknown>(url: string, body: B): Promise<T> => {
+  return ConnectionAPI.connect(url, MethodEnum.POST, body);
+};
+
+export const connectionAPIPut = async <T, B = unknown>(url: string, body: B): Promise<T> => {
+  return ConnectionAPI.connect(url, MethodEnum.PUT, body);
+};
+
+export const connectionAPIPatch = async <T, B = unknown>(url: string, body: B): Promise<T> => {
+  return ConnectionAPI.connect(url, MethodEnum.PATCH, body);
+};
