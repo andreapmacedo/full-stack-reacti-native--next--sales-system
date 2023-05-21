@@ -2,8 +2,8 @@ import { SafeAreaView } from "react-native";
 import styled from 'styled-components/native';
 import Login from "./modules/login";
 import { useState } from "react";
-// import Modal from "./shared/components/modal/Modal";
-// import Button from "./shared/components/button/Button";
+import store from "./store";
+import { Provider } from "react-redux";
 
 
 export const NewText = styled.Text`
@@ -14,15 +14,19 @@ export const NewText = styled.Text`
 const App = () => {
   const [modalVisible, setModalVisible] = useState(false);
   return (
-    <SafeAreaView>
-      {/* <Modal
-        onCloseModal={() => setModalVisible(false)}
-        visible={modalVisible}
-        text="Texto"
-        title="Titulo"/>
-      <Button title='open' onPress={() => setModalVisible(true)}/> */}
+    <Provider store={store}>
+      <SafeAreaView>
+
+      
+        {/* <Modal
+          onCloseModal={() => setModalVisible(false)}
+          visible={modalVisible}
+          text="Texto"
+          title="Titulo"/>
+        <Button title='open' onPress={() => setModalVisible(true)}/> */}
       <Login />
     </SafeAreaView>
+    </Provider>
   );
 };
 

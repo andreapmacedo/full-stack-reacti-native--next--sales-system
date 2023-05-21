@@ -1,8 +1,10 @@
 import { connectionAPIPost } from '../functions/connection/connectionAPI';
 import { ReturnLogin } from '../types/returnLogin';
-import { UserType } from '../types/userType';
+// import { UserType } from '../types/userType';
 import { RequestLogin } from './../types/requestLogin';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setUserAction } from '../../store/reducers/userReducer';
 
 
 
@@ -20,7 +22,8 @@ export const useRequest = () => {
   // const { setModal } = useGlobalReducer();
   const [loading, setLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
-  const [user, setUser] = useState<UserType>();
+  // const [user, setUser] = useState<UserType>();
+  const dispatch = useDispatch();
 
   // const request = async <T, B = unknown>({
   //   url,
@@ -61,14 +64,13 @@ export const useRequest = () => {
     setLoading(true);
     const x = await connectionAPIPost<ReturnLogin>('http://192.168.0.15:8080/auth', body)
       .then((result) => {
-        setUser(result.user);
+        // setUser(result.user);
+        dispatch(setUserAction(result.user));
       })
       .catch(() => {
       console.log('erro');
       setErrorMessage('Email ou senha inválidos');
     });
-
-    
     setLoading(false);
   };
 
