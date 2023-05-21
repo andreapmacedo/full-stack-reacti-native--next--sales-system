@@ -1,29 +1,17 @@
 import { useState } from 'react';
-import axios from 'axios';
 import { NativeSyntheticEvent, TextInputChangeEventData } from 'react-native';
-import { connectionAPIPost } from '../../../shared/functions/connection/connectionAPI';
+import { useRequest } from '../../../shared/hooks/useRequest';
+
 
 
 export const useLogin = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string>('');
-
-
+  
+  const {authRequest, errorMessage, loading, setErrorMessage} = useRequest();
+  
   const handleOnPress = async () => {
-    console.log('clicou');
-    // const returnID = await axios.get('http://192.168.0.15:8080/correios/59020660');
-    setLoading(true);
-    // const resultAxios = await axios.post('http://192.168.0.15:8080/auth', {
-    await connectionAPIPost('http://192.168.0.15:8080/auth', {
-      email,
-      password,
-    }).catch(() => {
-      console.log('erro');
-      setErrorMessage('Email ou senha inválidos');
-    });
-    setLoading(false);
+    authRequest({ email, password });
   };
 
   const handleOnChangeEmail = (event:NativeSyntheticEvent<TextInputChangeEventData>) => {
