@@ -4,7 +4,7 @@ import { ReturnLogin } from '../types/returnLogin';
 import { RequestLogin } from './../types/requestLogin';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setUserAction } from '../../store/reducers/userReducer';
+import { useUserReducer } from '../../store/reducers/userReducer/useUserReducer';
 
 
 
@@ -18,7 +18,7 @@ import { setUserAction } from '../../store/reducers/userReducer';
 
 export const useRequest = () => {
   // const { reset } = useNavigation<NavigationProp<ParamListBase>>();
-  // const { setUser } = useUserReducer();
+  const { setUser } = useUserReducer();
   // const { setModal } = useGlobalReducer();
   const [loading, setLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -65,7 +65,8 @@ export const useRequest = () => {
     const x = await connectionAPIPost<ReturnLogin>('http://192.168.0.15:8080/auth', body)
       .then((result) => {
         // setUser(result.user);
-        dispatch(setUserAction(result.user));
+        // dispatch(setUserAction(result.user));
+        setUser(result.user);
       })
       .catch(() => {
       console.log('erro');
