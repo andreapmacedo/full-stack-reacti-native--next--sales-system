@@ -1,32 +1,31 @@
 import { connectionAPIPost } from '../functions/connection/connectionAPI';
 import { ReturnLogin } from '../types/returnLogin';
-// import { UserType } from '../types/userType';
 import { RequestLogin } from './../types/requestLogin';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useUserReducer } from '../../store/reducers/userReducer/useUserReducer';
-import { setUserAction } from '../../store/reducers/userReducer';
-
-
+import { useGlobalReducer } from '../../store/reducers/globalReducer/useGlobalReducer';
 
 export const useRequest = () => {
+  const { setUser } = useUserReducer();
+  const { setModal } = useGlobalReducer();
   const [loading, setLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
-    
-  
-  const dispatch = useDispatch();
 
 
   const authRequest = async (body: RequestLogin) => {
     setLoading(true);
     const x = await connectionAPIPost<ReturnLogin>('http://192.168.0.15:8080/auth', body)
       .then((result) => {
-        dispatch(setUserAction(result.user));
-        // setUser(result.user);
+        setUser(result.user);
       })
       .catch(() => {
-      console.log('erro');
-      setErrorMessage('Email ou senha inválidos');
+      // console.log('erro'); // versão 1
+      // setErrorMessage('Email ou senha inválidos'); // versão 2
+      setModal({
+        visible: true,
+        title: 'Erro',
+        text: 'Usuário ou senha inválidos',
+      });
     });
     setLoading(false);
   };

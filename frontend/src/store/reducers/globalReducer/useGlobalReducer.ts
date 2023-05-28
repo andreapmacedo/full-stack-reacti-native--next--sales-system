@@ -1,29 +1,36 @@
-// import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-// import { GlobalModalType } from '../../../shared/components/modal/globalModal/GlobalModal';
-// import { useAppSelector } from '../../hooks';
-// import { setModalAction } from '.';
+import { GlobalModalType } from '../../../shared/components/modal/GlobalModal/GlobalModal';
+import { useAppSelector } from '../../hooks';
+import { setModalAction } from '.';
 
-// export const useGlobalReducer = () => {
-//   const dispatch = useDispatch();
-//   const { modal } = useAppSelector((state) => state.globalReducer);
+export const useGlobalReducer = () => {
+  const dispatch = useDispatch();
+  const { modal } = useAppSelector((state) => state.globalReducer);
 
-//   const closeModal = () => {
-//     dispatch(
-//       setModalAction({
-//         ...modal,
-//         visible: false,
-//       }),
-//     );
-//   };
+  const closeModal = () => {
+    dispatch(
+      setModalAction({
+        ...modal,
+        visible: false,
+      }),
+    );
+  };
 
-//   const setModal = (currentModal: GlobalModalType) => {
-//     dispatch(setModalAction(currentModal));
-//   };
+  // const setModal = (title: string, text: string) => {
+  //   dispatch(setModalAction({
+  //     visible: true,
+  //     title,
+  //     text,
+  //   }));
+  // };
+  const setModal = (currentModal: GlobalModalType) => {
+    dispatch(setModalAction(currentModal));
+  };
 
-//   return {
-//     modal,
-//     closeModal,
-//     setModal,
-//   };
-// };
+  return {
+    modal,
+    closeModal,
+    setModal,
+  };
+};
