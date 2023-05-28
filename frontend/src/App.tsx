@@ -4,6 +4,7 @@ import Login from "./modules/login";
 import { useState } from "react";
 import store from "./store";
 import { Provider } from "react-redux";
+import GlobalModal from "./shared/components/modal/GlobalModal/GlobalModal";
 
 
 export const NewText = styled.Text`
@@ -16,16 +17,9 @@ const App = () => {
   return (
     <Provider store={store}>
       <SafeAreaView>
-
-      
-        {/* <Modal
-          onCloseModal={() => setModalVisible(false)}
-          visible={modalVisible}
-          text="Texto"
-          title="Titulo"/>
-        <Button title='open' onPress={() => setModalVisible(true)}/> */}
-      <Login />
-    </SafeAreaView>
+        <GlobalModal />
+        <Login />
+      </SafeAreaView>
     </Provider>
   );
 };
