@@ -1,4 +1,4 @@
-import { connectionAPIPost } from '../functions/connection/connectionAPI';
+import ConnectionAPI, { MethodType, connectionAPIPost } from '../functions/connection/connectionAPI';
 import { ReturnLogin } from '../types/returnLogin';
 import { RequestLogin } from './../types/requestLogin';
 import { useState } from 'react';
@@ -8,6 +8,15 @@ import { NavigationProp, ParamListBase, useNavigation } from '@react-navigation/
 import { MenuUrl } from '../enums/MenuUrl.enum';
 import { setAuthorizationToken } from '../functions/connection/auth';
 
+interface requestProps<T, B = unknown> {
+  url: string;
+  method: MethodType;
+  saveGlobal?: (object: T) => void;
+  body?: B;
+  message?: string;
+}
+
+
 export const useRequest = () => {
   const { reset } = useNavigation();
   // const { navigate } = useNavigation<NavigationProp<ParamListBase>>();
@@ -15,6 +24,43 @@ export const useRequest = () => {
   const { setModal } = useGlobalReducer();
   const [loading, setLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
+
+
+  const request = async <T, B = unknown>({
+    url,
+    method,
+    saveGlobal,
+    body,
+    message,
+  }: requestProps<T, B>): Promise<T | undefined> => {
+    setLoading(true);
+    const returnObject: T | undefined = await ConnectionAPI.connect<T>(url, method, body)
+      .then((result) => {
+        if (saveGlobal) {
+          saveGlobal(result);
+        }
+        if (message) {
+          setModal({
+            visible: true,
+            title: 'Sucesso!',
+            text: message,
+          });
+        }
+        return result;
+      })
+      .catch((error: Error) => {
+        setModal({
+          visible: true,
+          title: 'Erro',
+          text: error.message,
+        });
+        return undefined;
+      });
+
+    setLoading(false);
+    return returnObject;
+  };
+
 
 
   const authRequest = async (body: RequestLogin) => {
@@ -50,7 +96,7 @@ export const useRequest = () => {
   return {
     loading,
     errorMessage,
-  //   request,
+    request,
     authRequest,
     setErrorMessage,
   };
