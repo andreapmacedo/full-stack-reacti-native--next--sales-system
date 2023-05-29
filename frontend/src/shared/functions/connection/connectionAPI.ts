@@ -1,11 +1,21 @@
-import axios from 'axios';
+import axios, { Axios, AxiosRequestConfig } from 'axios';
 import { MethodEnum } from '../../enums/mehtods.enum';
+import { getAuthorizationToken } from './auth';
 
 export type MethodType = 'get' | 'delete' | 'post' | 'put' | 'patch';
 
 export default class ConnectionAPI {
 
   static async call<T>(url: string, method: MethodType, body?: unknown): Promise<T> {
+    const token = await getAuthorizationToken();
+    
+    const config: AxiosRequestConfig = {
+      headers: {
+        Authorizarion: '',
+        'Content-Type': 'application/json',
+      },
+    };
+
     switch (method) {
       case MethodEnum.DELETE: // no body
       case MethodEnum.GET: // no body
