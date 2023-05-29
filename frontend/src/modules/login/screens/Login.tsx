@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../../../shared/components/button/Button";
 import Input from "../../../shared/components/input/Input";
 import { useLogin } from "../hooks/useLogin";
 import { View } from "react-native";
 import { ContainerLogin, ImageLogo } from "../styles/login.style";
 import { theme } from "../../../shared/themes/theme";
+// import { useNavigation } from "@react-navigation/native";
+import { MenuUrl } from "../../../shared/enums/MenuUrl.enum";
+// import { getAuthorizationToken } from "../../../shared/functions/connection/auth";
 
 const Login = () => {
 
-
+  // const navigation = useNavigation();
   const {
     email,
     password,
@@ -17,6 +20,18 @@ const Login = () => {
     handleOnPress,
     handleOnChangeEmail,
     handleOnChangePassword, } = useLogin();
+
+
+  // useEffect(() => {
+  //   const test = async () => {
+  //     const token = await getAuthorizationToken();
+  //     if (token) {
+  //       navigation.navigate(MenuUrl.HOME);
+  //     }
+  //   }
+  //   test();
+  // }, []);
+
 
   return (
     <View>
